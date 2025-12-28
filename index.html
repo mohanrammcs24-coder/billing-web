@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biryani House POS</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>Biryani House</h1>
+        <p>Fast billing and menu management for your briyani shop</p>
+      </div>
+      <div class="header-cta">
+        <button id="pay-now-top" class="primary">Pay Now</button>
+        <button id="print-bill-top" class="ghost">Print Bill</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="menu-management" class="card">
+        <div class="card-header">
+          <h2>Manage Menu</h2>
+          <button id="add-new-menu" class="primary small">Add New</button>
+        </div>
+        <form id="menu-form" class="stack" autocomplete="off">
+          <input type="hidden" id="menu-id" />
+          <div class="form-row">
+            <label>
+              Item Name
+              <input type="text" id="menu-name" required />
+            </label>
+            <label>
+              Category
+              <select id="menu-category">
+                <option value="biryani">Biryani</option>
+                <option value="starter">Starter</option>
+                <option value="gravy">Gravy</option>
+              </select>
+            </label>
+            <label>
+              Price (₹)
+              <input type="number" id="menu-price" min="0" step="1" required />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              Image URL
+              <input type="url" id="menu-image" placeholder="https://..." />
+            </label>
+            <label>
+              Description
+              <input type="text" id="menu-desc" maxlength="120" />
+            </label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="primary">Save Item</button>
+            <button type="reset" id="cancel-edit" class="ghost">Cancel</button>
+          </div>
+        </form>
+        <div class="table-wrapper">
+          <table id="menu-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="menu-gallery" class="grid card">
+        <!-- Menu cards injected here -->
+      </section>
+
+      <section id="billing" class="card">
+        <div class="card-header">
+          <h2>Cart & Bill</h2>
+          <div class="bill-actions">
+            <button id="clear-cart" class="ghost">Clear Cart</button>
+            <button id="print-bill" class="ghost">Print Bill</button>
+            <button id="pay-now" class="primary">Pay Now</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table id="cart-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="bill-summary">
+          <div>
+            <span>Subtotal</span>
+            <strong id="subtotal">₹0.00</strong>
+          </div>
+          <div>
+            <span>GST (5%)</span>
+            <strong id="tax">₹0.00</strong>
+          </div>
+          <div class="grand-total">
+            <span>Total</span>
+            <strong id="grand-total">₹0.00</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="reporting" class="card">
+        <div class="card-header">
+          <h2>Monthly Sales Report</h2>
+          <button id="export-report" class="ghost small">Export CSV</button>
+        </div>
+        <div class="table-wrapper">
+          <table id="report-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Orders</th>
+                <th>Revenue</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <canvas id="report-chart" height="140"></canvas>
+      </section>
+    </main>
+
+    <div id="qr-modal" class="modal hidden">
+      <div class="modal-content">
+        <button class="modal-close" id="close-qr">&times;</button>
+        <h3>Pay with UPI</h3>
+        <img
+          id="qr-image"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BiryaniHouseUPI"
+          alt="UPI QR Code"
+        />
+        <p>Scan the QR code to complete payment</p>
+      </div>
+    </div>
+
+    <template id="menu-card-template">
+      <article class="menu-card">
+        <img alt="" />
+        <div class="details">
+          <h3></h3>
+          <p class="desc"></p>
+          <div class="meta">
+            <span class="price"></span>
+            <button class="add-cart">Add</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
+
+
